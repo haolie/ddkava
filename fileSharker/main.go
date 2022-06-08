@@ -1,24 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"sync"
 
-	"fileSharker/config"
-	"fileSharker/src/fileScan"
+	_ "fileSharker/src"
+	"fileSharker/src/Server"
 )
 
 func main() {
-	config.Load()
-
-	for _, pth := range config.GetPaths() {
-		list, err := fileScan.ScanDir(pth, true)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		for _, item := range list {
-			fmt.Printf("fileName:%s key:%s", item.FileName, item.FileKey)
-		}
-	}
+	var wg sync.WaitGroup
+	wg.Add(1)
+	Server.Start(&wg)
+	wg.Wait()
 }

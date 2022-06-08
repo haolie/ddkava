@@ -8,14 +8,18 @@ import (
 
 var (
 	configObj   *Config
-	fileTypeMap = make(map[string]bool)
+	fileTypeMap = make(map[string]struct{})
 	isLoad      bool
 )
 
-func Load() error {
+func Load(path string) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
-	viper.AddConfigPath(".")
+	if len(path) == 0 {
+		path = "."
+	}
+
+	viper.AddConfigPath(path)
 
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -25,24 +29,32 @@ func Load() error {
 	configObj = &Config{}
 	err = viper.Unmarshal(configObj)
 
+	nitFileTypeMap()
+
 	isLoad = true
 	return err
 }
 
-func CheckFileType(fileType string) bool {
-	if !isLoad && len(configObj.FileTypes) > 1 {
-		strList := strings.Split(configObj.FileTypes, ",")
-		fileTypeMap = make(map[string]bool, len(strList))
-		for _, str := range strList {
-			if len(str) == 0 {
-				continue
-			}
-
-			fileTypeMap[str] = true
+func nitFileTypeMap() {
+	strList := strings.Split(configObj.FileTypes, ",")
+	fileTypeMap = make(map[string]struct{}, len(strList))
+	for _, str := range strList {
+		if len(str) == 0 {
+			continue
 		}
-	}
 
-	return len(fileTypeMap) == 0 || fileTypeMap[fileType]
+		fileTypeMap[str] = struct{}{}
+	}
+}
+
+func CheckFileType(fileType string) bool {
+	_, exists := fileTypeMap[fileType]
+	return exists
+}
+
+func GetConfig() Config {
+	var temp = *configObj
+	return temp
 }
 
 func GetPaths() []string {
