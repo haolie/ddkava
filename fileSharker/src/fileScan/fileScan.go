@@ -143,7 +143,7 @@ func scan(filePath string) (fileOjb *model.FileScan, err error) {
 	h.Write(totalBuff)
 
 	strBuff := h.Sum(nil)
-	key := fmt.Sprintf("%x\n", strBuff)
+	key := fmt.Sprintf("%x", strBuff)
 
 	return model.NewFileScan(fStat.Name(), filePath, key, fSize), nil
 }
@@ -151,11 +151,14 @@ func scan(filePath string) (fileOjb *model.FileScan, err error) {
 // EachDir 遍历目录
 // @description:
 // parameter:
-//		@dirPath: 目录
-//		@deep: 是否深层递归
-//		@callBack: 回调
+//
+//	@dirPath: 目录
+//	@deep: 是否深层递归
+//	@callBack: 回调
+//
 // return:
-//		@error: 错误
+//
+//	@error: 错误
 func EachDir(dirPath string, deep bool, callBack func(dir string, info fs.FileInfo) error) error {
 	if callBack == nil {
 		return nil

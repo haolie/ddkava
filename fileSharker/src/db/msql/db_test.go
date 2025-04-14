@@ -20,7 +20,7 @@ func TestDownF(t *testing.T) {
 	}
 
 	fm := &model.DFileModel{
-		Id:           111111,
+		Id:           1111229911,
 		FKey:         "1111111",
 		CompressName: "111111",
 		CompressSize: 111111,
@@ -33,11 +33,11 @@ func TestDownF(t *testing.T) {
 
 	dbLayer := new(mysqlDbLayer)
 
-	//err=dbLayer.AddFile(model.SysCon_Table_Name_Down,fm)
-	//if err != nil {
-	//	t.Errorf("AddFile Err:%v",err)
-	//	//return
-	//}
+	err = dbLayer.AddFile(model.SysCon_Table_Name_Down, fm)
+	if err != nil {
+		t.Errorf("AddFile Err:%v", err)
+		//return
+	}
 
 	_, exists, err := dbLayer.GetDFListWithKey("Id", strconv.Itoa(int(fm.Id)))
 	if err != nil {

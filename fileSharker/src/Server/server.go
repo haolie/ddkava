@@ -1,57 +1,83 @@
 package Server
 
 import (
+	"context"
 	"fmt"
-	"sync"
 
 	"fileSharker/config"
-	"fileSharker/src/model"
+	"fileSharker/log"
 )
+
+type RegisterCallBacker func(ctx context.Context) []error
 
 var (
-	loadEv      = model.NewEVBack()
-	completedEv = model.NewEVBack()
+	loadCallBackMap  = make(map[string]RegisterCallBacker, 4)
+	startCallBackMap = make(map[string]RegisterCallBacker, 4)
 )
 
-func loadConfig() error {
-	return config.Load("")
+// 注册数据加载
+func RegisterLoadFun(key string, cb RegisterCallBacker) {
+	if _, exists := loadCallBackMap[key]; exists {
+		return
+	}
+
+	loadCallBackMap[key] = cb
 }
 
-func Start(wg *sync.WaitGroup) bool {
-	err := loadConfig()
-	if err != nil {
-		fmt.Println(err)
-
-		return false
+// 注册服务器启动
+func RegisterStartFun(key string, cb RegisterCallBacker) {
+	if _, exists := startCallBackMap[key]; exists {
+		return
 	}
 
-	list := loadEv.CallAll(nil)
-	if len(list) > 0 {
-		fmt.Println(list)
+	startCallBackMap[key] = cb
+}
 
-		return false
-	}
+// 加载
+func load(ctx context.Context) bool {
+	for key, cb := range loadCallBackMap {
+		errs := cb(ctx)
+		if len(errs) > 0 {
+			log.LogInfo(fmt.Sprintf("%s load failed", key))
+			log.LogErrs(errs)
 
-	list = completedEv.CallAll(nil)
-	if len(list) > 0 {
-		fmt.Println(list)
-
-		return false
+			return false
+		}
 	}
 
 	return true
 }
 
-func RegisterLoad(key string, cb func(interface{}) []error) {
-	err := loadEv.AddCallBack(key, cb)
-	if err != nil {
-		panic(err)
+// 开始运行
+func start(ctx context.Context) bool {
+	for key, cb := range startCallBackMap {
+		errs := cb(ctx)
+		if len(errs) > 0 {
+			log.LogInfo(fmt.Sprintf("%s start failed", key))
+			log.LogErrs(errs)
+
+			return false
+		}
 	}
+
+	return true
 }
 
-func RegisterCompleted(key string, cb func(interface{}) []error) {
-	err := completedEv.AddCallBack(key, cb)
+func Start(ctx context.Context) bool {
+
+	err := config.Load("")
 	if err != nil {
-		panic(err)
+		log.LogError(fmt.Errorf("load config err:%s", err))
+		return false
 	}
+
+	if !load(ctx) {
+		return false
+	}
+
+	if !start(ctx) {
+		return false
+	}
+
+	return true
 }

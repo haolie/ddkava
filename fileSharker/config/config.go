@@ -16,7 +16,7 @@ func Load(path string) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
 	if len(path) == 0 {
-		path = "."
+		path = "./"
 	}
 
 	viper.AddConfigPath(path)
