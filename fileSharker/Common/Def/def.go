@@ -4,6 +4,7 @@ const (
 	// 配置 http端口
 	Config_http_Port = "http_port"
 	Config_FileName  = "Config"
+	Config_Http_Api  = "http_api"
 
 	// 数据库配置
 	Config_Db_Ip   = "db_ip"
@@ -15,4 +16,9 @@ const (
 	Config_Log_Path     = "log_path"
 	Config_File_Types   = "file_types"
 	Config_File_TypeMap = "file_type_map"
+
+	Config_FilePathList = "filepathlist"
+
+	Http_GetInfo   = "getInfo"
+	Http_StartScan = "startScan"
 )

@@ -1,0 +1,62 @@
+.mainItem{
+  height: 22rem;
+  margin-left: 8rem;
+}
+.el-carousel__indicators--vertical{
+  display: none;
+}
+
+body{
+  width: 99%;
+  height: 99%;
+}
+
+.main-out{
+  height: 100%;
+}
+
+.el-container{
+  height: 100%;
+}
+
+.el-main{
+  height: 100%;
+  background-color: red;
+}
+
+
+
+
+@media screen and (min-width: 1921px) and (max-width: 2560px) {
+  html{
+    font-size:22px;
+  }
+}
+@media screen and (min-width: 1681px) and (max-width: 1920px) {
+  html{
+    font-size:15px;
+  }
+}
+@media screen and (min-width: 1441px) and (max-width: 1680px) {
+  html{
+    font-size:14px;
+  }
+}
+@media screen and (min-width: 1367px) and (max-width: 1440px) {
+  html{
+    font-size:13px;
+  }
+}
+@media screen and (min-width: 1280px) and (max-width: 1366px) {
+  html{
+    font-size:12px;
+  }
+}
+
+
+@media screen and (max-width: 1279px ) {
+  html{
+    font-size:11px;
+  }
+}
+

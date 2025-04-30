@@ -1,0 +1,9 @@
+/build/
+/config/
+/dist/
+/*.js
+/koa-server/
+/proxy-server/
+/src/api/
+/static/
+/static

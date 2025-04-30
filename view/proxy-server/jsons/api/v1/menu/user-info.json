@@ -1,0 +1,9 @@
+{
+  "status": {
+    "code": 200,
+    "message": "系统请求成功！"
+  },
+  "data": {
+    "name": "admin"
+  }
+}

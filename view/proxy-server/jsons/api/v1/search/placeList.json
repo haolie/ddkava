@@ -1,0 +1,36 @@
+{
+  "status": {
+    "code": 200,
+    "message": "系统请求成功！"
+  },
+  "data": [
+    {
+      "id": 0,
+      "name": "博派龙舟网吧",
+      "region": "成都市",
+      "type": "网吧",
+      "regionId": 1,
+      "lng": 104.104733,
+      "lat": 30.632685,
+      "area": 1192,
+      "state": "",
+      "count": 173,
+      "policeStation": "XX派出所",
+      "address": "成都市锦江区龙舟南街108号1栋3-1号"
+    },
+    {
+      "id": 1,
+      "name": "双流机场",
+      "region": "成都市",
+      "type": "wifi场所",
+      "regionId": 1,
+      "lng": 103.96116,
+      "lat": 30.573754,
+      "area": 768,
+      "state": "",
+      "count": 199,
+      "policeStation": "XX派出所",
+      "address": "四川省成都市双流区机场路"
+    }
+  ]
+}

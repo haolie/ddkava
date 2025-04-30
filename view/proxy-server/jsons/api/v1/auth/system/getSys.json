@@ -1,0 +1,52 @@
+{
+  "status": {
+    "code": 200,
+    "message": "系统请求成功！"
+  },
+  "data": [
+    {
+      "id": 1,
+      "name": "场所概览",
+      "url": "place",
+      "children": [
+        {
+          "id": 101,
+          "name": "场所概览",
+          "url": "place/view"
+        },
+        {
+          "id": 102,
+          "name": "场所查询",
+          "url": "place/search"
+        },
+        {
+          "id": 103,
+          "name": "场所信息维护",
+          "url": "place/info"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "数据质量分析",
+      "url": "qualityAnalysis",
+      "children": [
+        {
+          "id": 201,
+          "name": "数据质量监控",
+          "url": "data/qualityMonitor"
+        },
+        {
+          "id": 202,
+          "name": "数据报警记录",
+          "url": "data/alarmRecord"
+        },
+        {
+          "id": 203,
+          "name": "数据质量分析",
+          "url": "data/qualityAnalysis"
+        }
+      ]
+    }
+  ]
+}

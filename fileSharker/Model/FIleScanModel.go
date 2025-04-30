@@ -5,13 +5,13 @@ package Model
 */
 type FileScanModel struct {
 	// 文件名
-	FileName string
+	FileName string `json:"fileName"`
 	// 文件路径
-	FilePath string
+	FilePath string `json:"filePath"`
 	// 文件大小
-	FileSize int64
+	FileSize int64 `json:"fileSize"`
 	// 文件Key
-	FileKey string
+	FileKey string `json:"fileKey"`
 }
 
 /*
