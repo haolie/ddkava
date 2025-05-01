@@ -14,6 +14,7 @@ let api = {
       'S_USERINFO': 'usermgmt-service/menu/user-info',
  
       'C_GETINFO': 'getInfo',
+      'C_STARTSCAN': 'startScan',
     
     }
 

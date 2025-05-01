@@ -3,6 +3,7 @@ package ginSev
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -67,7 +68,15 @@ func startHServer(ctx context.Context) (errStr string) {
 				panic("config http api not exist")
 			}
 
+			viewPath, exists := Config.GetTypeValue[string](Def.Config_Http_View)
+			if !exists {
+				panic("config Http_View not exist")
+			}
+
 			engine := gin.Default()
+			engine.StaticFS("/view", http.Dir(viewPath))
+			engine.StaticFS("/static", http.Dir(viewPath+"/static"))
+
 			for k, v := range rootPostMap {
 				str := api + k
 				engine.POST(str, v)

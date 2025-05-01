@@ -93,7 +93,6 @@ let http = {
       return
     }
     let url = this.getUrl(o)
-    debugger
     new Promise((resolve, reject) => {
       instance[o.type](url, params).then((res) => {
         if (!res.data) {

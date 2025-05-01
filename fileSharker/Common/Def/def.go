@@ -5,6 +5,7 @@ const (
 	Config_http_Port = "http_port"
 	Config_FileName  = "Config"
 	Config_Http_Api  = "http_api"
+	Config_Http_View = "http_view"
 
 	// 数据库配置
 	Config_Db_Ip   = "db_ip"

@@ -24,19 +24,31 @@ func getInfo(ctx *gin.Context) {
 	m["StartTime"] = info.StartTime.Unix()
 	m["CurDir"] = info.CurDir
 
-	fileMap := make(map[string][]*Model.FileScanModel, 8)
+	groupList := make([]*FileGroup, 0, 8)
+	tempMap := make(map[string]*FileGroup, 8)
 	if info.Status == int32(Model.ScanStatusEnum_Completed) {
 		for _, item := range info.FileList {
-			_, exists := fileMap[item.FileKey]
+			group, exists := tempMap[item.FileKey]
 			if !exists {
-				fileMap[item.FileKey] = make([]*Model.FileScanModel, 0)
+				group = &FileGroup{
+					Key:  item.FileKey,
+					List: make([]*Model.FileScanModel, 0, 4),
+				}
+
+				tempMap[item.FileKey] = group
+				groupList = append(groupList, group)
 			}
 
-			fileMap[item.FileKey] = append(fileMap[item.FileKey], item)
+			group.List = append(group.List, item)
 		}
 	}
 
-	m["Files"] = fileMap
+	m["Files"] = groupList
 
 	ctx.JSON(200, HttpTools.CreateSuccessHSResponse(m))
+}
+
+type FileGroup struct {
+	Key  string                 `json:"Key"`
+	List []*Model.FileScanModel `json:"FileList"`
 }
